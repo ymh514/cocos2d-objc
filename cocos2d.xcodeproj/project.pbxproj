@@ -424,6 +424,9 @@
 		7A5948D119E375BE00F65F90 /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E260D718171D2000A0E872 /* CCTextField.m */; };
 		7A5948D319E375BE00F65F90 /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A1D181AE34600B983FE /* CCSlider.m */; };
 		7A59494019E3810500F65F90 /* CCPlatformTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01F19649E03003D460C /* CCPlatformTextField.m */; };
+		88470B5A2AF3B20700F7CD17 /* GLContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88470B592AF3B20700F7CD17 /* GLContextManager.m */; };
+		88470B5B2AF3B20700F7CD17 /* GLContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88470B592AF3B20700F7CD17 /* GLContextManager.m */; };
+		88470B5C2AF3B20700F7CD17 /* GLContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88470B592AF3B20700F7CD17 /* GLContextManager.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
@@ -630,6 +633,8 @@
 		7A4037C519E37126007B6E8F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C719E3712A007B6E8F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		83E1A88D19C8C19D000A3BCA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		88470B592AF3B20700F7CD17 /* GLContextManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLContextManager.m; sourceTree = "<group>"; };
+		88470B5D2AF3B21200F7CD17 /* GLContextManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLContextManager.h; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A039EBFD155C686B0061EE37 /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
@@ -1286,6 +1291,8 @@
 				B7E775CF18527EF0004221AA /* CCAppDelegate.m */,
 				D31C795119994197007921E1 /* CCMetalSupport_Private.h */,
 				D31C794F19994126007921E1 /* CCMetalSupport.m */,
+				88470B592AF3B20700F7CD17 /* GLContextManager.m */,
+				88470B5D2AF3B21200F7CD17 /* GLContextManager.h */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1778,6 +1785,7 @@
 				08F4AAE91C6E98A1004DAAF7 /* CCDrawNode.m in Sources */,
 				08F4AAEA1C6E98A1004DAAF7 /* CCLayout.m in Sources */,
 				08F4AAEB1C6E98A1004DAAF7 /* ccFPSImages.m in Sources */,
+				88470B5C2AF3B20700F7CD17 /* GLContextManager.m in Sources */,
 				08F4AAEC1C6E98A1004DAAF7 /* CCTableView.m in Sources */,
 				08F4AAED1C6E98A1004DAAF7 /* CCSprite9Slice.m in Sources */,
 				08F4AAEE1C6E98A1004DAAF7 /* NSAttributedString+CCAdditions.m in Sources */,
@@ -1859,6 +1867,7 @@
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
 				B7EE69E11819E75700B983FE /* CCLayout.m in Sources */,
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
+				88470B5A2AF3B20700F7CD17 /* GLContextManager.m in Sources */,
 				B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */,
 				B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */,
 				B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
@@ -1940,6 +1949,7 @@
 				7A59488F19E375B300F65F90 /* CCDirectorMac.m in Sources */,
 				7A59489119E375B400F65F90 /* CCGLView.m in Sources */,
 				7A59489319E375B400F65F90 /* CCWindow.m in Sources */,
+				88470B5B2AF3B20700F7CD17 /* GLContextManager.m in Sources */,
 				7A59494019E3810500F65F90 /* CCPlatformTextField.m in Sources */,
 				7A59489719E375B400F65F90 /* cocos2d.m in Sources */,
 				7A59489919E375B500F65F90 /* ccFPSImages.m in Sources */,

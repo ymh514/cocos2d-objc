@@ -46,6 +46,7 @@
 #endif
 
 #import "CCRenderer_Private.h"
+#import "GLContextManager.h"
 
 // needed for CCCallFuncO in Mac-display_link version
 //#import "CCActionManager.h"
@@ -97,9 +98,14 @@ static CCTextureCache *sharedTextureCache;
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 
 #if __CC_PLATFORM_IOS
-		_auxGLcontext = [[EAGLContext alloc]
-						 initWithAPI:kEAGLRenderingAPIOpenGLES2
-						 sharegroup:[[view context] sharegroup]];
+        // FIXME: not really sure this modify
+//		_auxGLcontext = [[EAGLContext alloc]
+//						 initWithAPI:kEAGLRenderingAPIOpenGLES2
+//						 sharegroup:[[view context] sharegroup]];
+        if(![GLContextManager sharedManager].sharedContext){
+            printf("[DEBUG] GLContextManager sharedManager is event null");
+        }
+        _auxGLcontext = [GLContextManager sharedManager].sharedContext;
 
 #elif __CC_PLATFORM_MAC
 		NSOpenGLPixelFormat *pf = [view pixelFormat];

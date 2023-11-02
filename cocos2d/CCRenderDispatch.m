@@ -45,7 +45,8 @@ EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *share
 	static dispatch_once_t once = 0;
 	dispatch_once(&once, ^{
 		CC_RENDER_DISPATCH_CONTEXT = [[EAGLContext alloc] initWithAPI:api sharegroup:sharegroup];
-		
+        printf("[DEBUG] cocos2d: CCRenderDispatchSetupGL, CC_RENDER_DISPATCH_CONTEXT create goes in\n");
+
 		CC_RENDER_DISPATCH_QUEUE = dispatch_queue_create("CCRenderQueue", DISPATCH_QUEUE_SERIAL);
 		CC_RENDER_DISPATCH_SEMAPHORE = dispatch_semaphore_create(CC_RENDER_DISPATCH_MAX_FRAMES);
 	});

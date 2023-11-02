@@ -79,6 +79,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCScene.h"
 
 #import "CCRenderDispatch.h"
+#import "GLContextManager.h"
 
 
 extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *sharegroup);
@@ -190,6 +191,13 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
+// FIXME: Jesse Test
++ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString *)format depthFormat:(GLuint)depth glContext:(EAGLContext *)glContext
+{
+    return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0 externalContext:glContext];
+}
+
+
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
 	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples];
@@ -203,6 +211,57 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
 	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+}
+
+- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples externalContext:(EAGLContext *)externalContext {
+    if ((self = [super initWithFrame:frame])) {
+        _pixelFormat = format;
+        _depthFormat = depth;
+        _multiSampling = sampling;
+        _preserveBackbuffer = retained;
+        _msaaSamples = nSamples;
+        _externalContext = externalContext;
+                
+        // Default to the screen's native scale.
+        UIScreen *screen = [UIScreen mainScreen];
+        if ([screen respondsToSelector:@selector(nativeScale)]) {
+            self.contentScaleFactor = screen.nativeScale;
+        } else {
+            self.contentScaleFactor = screen.scale;
+        }
+        printf("[DEBUG] cocos2d: call setupSurfaceWithSharegroup from initWithFrame new new \n");
+
+        if (!_context) {
+            printf("[DEBUG] cocos2d: _context is null, set externalContext to _context\n");
+            _context = externalContext;
+            [[GLContextManager sharedManager] setSharedContext:externalContext];
+            [EAGLContext setCurrentContext:_context];
+        }
+        if (_context != externalContext) {
+            printf("[DEBUG] cocos2d: _context != externalContext, set Current context as externalContext\n");
+
+            // Ensure all OpenGL commands on the current context are completed
+            [EAGLContext setCurrentContext:_context];
+            glFinish();
+            
+            // Here you can add code to clean up resources from the old context if necessary
+            
+            // Set the new external context
+            _context = externalContext;
+            [EAGLContext setCurrentContext:_context];
+        }
+
+
+        if (![self setupSurfaceWithSharegroup:sharegroup]) {
+            return nil;
+        }
+        
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
+        // Multiple touch default enabled
+        self.multipleTouchEnabled = YES;
+#endif
+    }
+    return self;
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
@@ -222,6 +281,7 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 		} else {
 			self.contentScaleFactor = screen.scale;
 		}
+        printf("[DEBUG] cocos2d: call setupSurfaceWithSharegroup from initWithFrame\n");
 
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			return nil;
@@ -244,7 +304,7 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 		_depthFormat = 0; // GL_DEPTH_COMPONENT24;
 		_multiSampling= NO;
 		_msaaSamples = 0;
-
+        printf("[DEBUG] cocos2d: call setupSurfaceWithSharegroup from initWithCoder\n");
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			return nil;
 		}

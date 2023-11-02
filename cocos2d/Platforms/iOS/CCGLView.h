@@ -122,6 +122,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  @param format The pixel format of the render buffer, either: `kEAGLColorFormatRGBA8` (24-bit colors, 8-bit alpha) or `kEAGLColorFormatRGB565` (16-bit colors, no alpha).
  @param depth The size and format of the depth buffer, use 0 to disable depth buffer. Otherwise use `GL_DEPTH24_STENCIL8_OES` or `GL_DEPTH_COMPONENT24_OES`. */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth;
+
+@property (nonatomic, strong) EAGLContext *externalContext;
+
+// FIXME: Jesse test
++ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString *)format depthFormat:(GLuint)depth glContext:(EAGLContext *)glContext;
+
 /** creates an initializes an CCGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping.
  @param frame The frame of the view.
  @param format The pixel format of the render buffer, either: `kEAGLColorFormatRGBA8` (24-bit colors, 8-bit alpha) or `kEAGLColorFormatRGB565` (16-bit colors, no alpha).
@@ -148,6 +154,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  @param sampling Whether to enable multisampling (AA).
  @param nSamples The number of samples used in multisampling, from 0 (no AA) to `glGetIntegerv(GL_MAX_SAMPLES_APPLE)`. Only takes effect if the preceding multisampling parameters is set to `YES`. */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
+
+- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples externalContext:(EAGLContext *)externalContext;
 
 /** @name Framebuffer Information */
 
